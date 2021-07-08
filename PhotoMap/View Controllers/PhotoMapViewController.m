@@ -8,8 +8,12 @@
 
 #import "PhotoMapViewController.h"
 #import "LocationsViewController.h"
+#import <MapKit/MapKit.h>
 
 @interface PhotoMapViewController () <UIImagePickerControllerDelegate, UINavigationControllerDelegate, LocationsViewControllerDelegate, MKMapViewDelegate>
+
+@property (weak, nonatomic) IBOutlet MKMapView *mapView;
+@property (strong, nonatomic) UIImage *selectedImage;
 
 @end
 
@@ -17,7 +21,10 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    
+    //one degree of latitude is approximately 111 kilometers (69 miles) at all times.
+    MKCoordinateRegion sfRegion = MKCoordinateRegionMake(CLLocationCoordinate2DMake(37.783333, -122.416667), MKCoordinateSpanMake(0.1, 0.1));
+    [self.mapView setRegion:sfRegion animated:false];
     
     self.mapView.delegate = self;
 }
@@ -33,7 +40,7 @@
     MKPointAnnotation *annotation = [MKPointAnnotation new];
     annotation.coordinate = coordinate;
     annotation.title = @"Picture!";
-    [self.mapView addAnnotation:annotation]; // need to create outlet
+    [self.mapView addAnnotation:annotation];
 }
 
 - (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation {
@@ -49,6 +56,38 @@
 
      return annotationView;
  }
+
+- (IBAction)onTapCamera:(id)sender {
+    UIImagePickerController *imagePickerVC = [UIImagePickerController new];
+    imagePickerVC.delegate = self;
+    imagePickerVC.allowsEditing = YES;
+
+    // The Xcode simulator does not support taking pictures, so let's first check that the camera is indeed supported on the device before trying to present it.
+    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+        imagePickerVC.sourceType = UIImagePickerControllerSourceTypeCamera;
+    }
+    else {
+        NSLog(@"Camera 🚫 available so we will use photo library instead");
+        imagePickerVC.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+    }
+
+    [self presentViewController:imagePickerVC animated:YES completion:nil];
+}
+
+-(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info {
+    
+    // Get the image captured by the UIImagePickerController
+    UIImage *originalImage = info[UIImagePickerControllerOriginalImage];
+    UIImage *editedImage = info[UIImagePickerControllerEditedImage];
+
+    // Do something with the images (based on your use case)
+    self.selectedImage = editedImage;
+    
+    // Dismiss UIImagePickerController to go back to your original view controller
+    [self dismissViewControllerAnimated:YES completion:nil];
+    
+    [self prepareForSegue:@"tagSegue" sender:nil];
+}
 
 #pragma mark - Navigation
 

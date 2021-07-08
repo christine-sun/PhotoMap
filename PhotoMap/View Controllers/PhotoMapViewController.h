@@ -10,6 +10,6 @@
 #import <MapKit/MapKit.h>
 #import "LocationsViewController.h"
 
-@interface PhotoMapViewController : UIViewController <LocationsViewControllerDelegate>
+@interface PhotoMapViewController : UIViewController <LocationsViewControllerDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
 @end

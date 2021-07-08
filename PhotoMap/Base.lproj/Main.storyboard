@@ -23,7 +23,12 @@
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="W9C-Mx-c1Y">
                                 <rect key="frame" x="136" y="674" width="119" height="119"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" backgroundImage="camera"/>
+                                <state key="normal" title="camera" backgroundImage="camera">
+                                    <color key="titleColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="onTapCamera:" destination="BYZ-38-t0r" eventType="touchUpInside" id="3rl-Tz-PfL"/>
+                                </connections>
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
@@ -31,8 +36,9 @@
                     </view>
                     <navigationItem key="navigationItem" id="p1y-Ku-BJR"/>
                     <connections>
+                        <outlet property="mapView" destination="YwZ-1D-c4g" id="iMp-s9-VQU"/>
                         <segue destination="dhm-cj-dCe" kind="show" identifier="fullImageSegue" id="j47-0S-4ot"/>
-                        <segue destination="Fvc-Fc-ega" kind="show" identifier="tagSegue" id="wtL-Hs-mhM"/>
+                        <segue destination="Fvc-Fc-ega" kind="presentation" identifier="tagSegue" id="wtL-Hs-mhM"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -44,11 +50,11 @@
             <objects>
                 <viewController id="Fvc-Fc-ega" customClass="LocationsViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="koW-ON-xDz">
-                        <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
+                        <rect key="frame" x="0.0" y="0.0" width="390" height="790"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="cRz-C4-EnW">
-                                <rect key="frame" x="0.0" y="0.0" width="390" height="810"/>
+                                <rect key="frame" x="0.0" y="0.0" width="390" height="756"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <searchBar key="tableHeaderView" contentMode="redraw" id="aFk-EU-377">
                                     <rect key="frame" x="0.0" y="0.0" width="390" height="44"/>
